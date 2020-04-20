@@ -21,11 +21,11 @@ class KafkaConsumer : ConsumerSeekAware {
             topics = ["KafkaRewind"]
     )
     fun consumer(@Payload event: String, @Header(KafkaHeaders.OFFSET) offset: Long) {
-        logger.info("Message consumed: $event")
+        logger.info("Message consumed: $event and offset $offset")
     }
 
     override fun onPartitionsAssigned(assignments: MutableMap<TopicPartition, Long>?, callback: ConsumerSeekAware.ConsumerSeekCallback?) {
-        val rewindTo = Instant.now().minusMillis(TimeUnit.MINUTES.toMillis(1)).toEpochMilli()
+        val rewindTo = Instant.now().minusMillis(TimeUnit.SECONDS.toMillis(30)).toEpochMilli()
         callback?.seekToTimestamp(assignments?.keys, rewindTo)
 
     }

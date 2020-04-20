@@ -15,7 +15,7 @@ class KafkaProducer(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun produceToKafka() {
-        for (i in 1..100) {
+        for (i in 1..1000) {
             val date = Instant.now().toString()
             logger.info("Sending date to kafka : $date")
             kafkaTemplate.send(topicName, date)
